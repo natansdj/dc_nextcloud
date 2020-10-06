@@ -3,9 +3,14 @@ version: '2.1'
 services:
   app:
     # image: nextcloud:fpm
+    # build:
+    #   context: docker/fpm/
+    #   dockerfile: Dockerfile.full
+    # image: home_nextcloud_fpm
     build:
-      context: docker/
+      context: docker/apache/
       dockerfile: Dockerfile.full
+    image: home_nextcloud_apache
     container_name: home_nextcloud
     external_links:
       - dev_mariadb:mariadb
@@ -16,19 +21,20 @@ services:
       - "a407:172.18.0.1"
       - "t490s:192.168.43.160"
     ports:
-      - "8080:8080"
+      - "8081:80"
     environment:
-      VIRTUAL_HOST: "nexcloud.vm"
-      VIRTUAL_PORT: "8080"
+      VIRTUAL_HOST: "nextcloud.vm"
+      VIRTUAL_PORT: "80"
       MYSQL_HOST: "mariadb"
       MYSQL_DATABASE: "home_nextcloud"
       MYSQL_USER: "nextcloud"
       MYSQL_PASSWORD: "sidjabat"
       NEXTCLOUD_ADMIN_USER: "admin"
       NEXTCLOUD_ADMIN_PASSWORD: "sidjabat"
-      NEXTCLOUD_DATA_DIR: "/var/www/html/data"
+      # NEXTCLOUD_DATA_DIR: "/var/www/html/data"
       REDIS_HOST: "redis"
       REDIS_HOST_PORT: "6379"
+      NEXTCLOUD_UPDATE: 1
     restart: unless-stopped
     networks:
       default:
