@@ -25,16 +25,25 @@ services:
     environment:
       VIRTUAL_HOST: "nextcloud.vm"
       VIRTUAL_PORT: "80"
+      NEXTCLOUD_TRUSTED_DOMAINS: "172.18.0.1 172.18.0.99 nextcloud.vm 192.168.43.150"
+      APACHE_DISABLE_REWRITE_IP: 1
+      TRUSTED_PROXIES: "172.18.0.0/24 192.168.43.0/24"
+      OVERWRITEHOST: "192.168.43.150"
+      OVERWRITEPROTOCOL: "http"
+      # OVERWRITEWEBROOT: "/"
+      # OVERWRITECONDADDR: "172.18.0.2"
       MYSQL_HOST: "mariadb"
       MYSQL_DATABASE: "home_nextcloud"
       MYSQL_USER: "nextcloud"
       MYSQL_PASSWORD: "sidjabat"
+      MYSQL_ROOT_PASSWORD: "root"
       NEXTCLOUD_ADMIN_USER: "admin"
       NEXTCLOUD_ADMIN_PASSWORD: "sidjabat"
       # NEXTCLOUD_DATA_DIR: "/var/www/html/data"
       REDIS_HOST: "redis"
       REDIS_HOST_PORT: "6379"
-      NEXTCLOUD_UPDATE: 1
+      REDIS_HOST_PASSWORD: ""
+      NEXTCLOUD_UPDATE: 0
     restart: unless-stopped
     networks:
       default:
